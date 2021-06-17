@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import VegaComponent from "./VegaComponent";
+import FetchContainer from "./FetchContainer";
 
 const App = () => {
-  return <VegaComponent />;
+  return <FetchContainer />;
 };
 
 const rootElement = document.getElementById("root");
