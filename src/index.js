@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import FetchContainer from "./FetchContainer";
+import PieContainer from "./PieContainer";
 
 const App = () => {
-  return <FetchContainer />;
+  return <PieContainer />;
 };
 
 const rootElement = document.getElementById("root");
