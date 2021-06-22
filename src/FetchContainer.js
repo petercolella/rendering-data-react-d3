@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { arc, csv } from "d3";
+import { arc, csv, pie } from "d3";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 
 const csvUrl =
@@ -18,16 +18,21 @@ const FetchContainer = () => {
   const centerX = width / 2;
   const centerY = height / 2;
 
-  const arcInstance = arc();
-  const piePieceDegree = data && (Math.PI * 2) / data.length;
+  // const arcInstance = arc();
+  // const piePieceDegree = data && (Math.PI * 2) / data.length;
 
-  const pieArc = (i) =>
-    arcInstance({
-      innerRadius: 0,
-      outerRadius: height < width ? height / 2 : width / 2,
-      startAngle: piePieceDegree * i,
-      endAngle: piePieceDegree * (i + 1),
-    });
+  // const pieArc = (i) =>
+  //   arcInstance({
+  //     innerRadius: 0,
+  //     outerRadius: height < width ? width : height,
+  //     startAngle: piePieceDegree * i,
+  //     endAngle: piePieceDegree * (i + 1),
+  //   });
+
+  const pieGenerator = pie().value(1);
+  const pieArc = arc()
+    .innerRadius(0)
+    .outerRadius(height < width ? width : height);
 
   useEffect(() => {
     csv(csvUrl).then(setData);
@@ -40,8 +45,11 @@ const FetchContainer = () => {
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${centerX}, ${centerY})`}>
-        {data.map((d, i) => (
+        {/* {data.map((d, i) => (
           <path key={i} fill={d["RGB hex value"]} d={pieArc(i)} />
+        ))} */}
+        {pieGenerator(data).map((d, i) => (
+          <path key={i} fill={d.data["RGB hex value"]} d={pieArc(d)} />
         ))}
       </g>
     </svg>
